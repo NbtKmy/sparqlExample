@@ -1,6 +1,8 @@
 function createSPARQLQuery(input) {
     return `SELECT distinct ?item ?itemLabel ?itemDescription WHERE{ 
-    ?item ?label "${input}"@de. 
+    ?item ?label "${input}"@de.
+    OPTIONAL {?item skos:altLabel "${input}"@de.}
+    ?item wdt:P2579 wd:Q199655.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". } 
     } LIMIT 10`;
 }
