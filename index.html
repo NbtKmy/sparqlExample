@@ -5,12 +5,19 @@
         <link rel="stylesheet" href="./css/style.css">
     </head>     
     <body>
-
+        <h1>Fachvokabular in Bibliothekswissenschaft</h1>
+        <h2>Deutsch-Japanisch/Englisch</h2>
+        <p></p>
         <form id="form" autocomplete="off" >
+            <label for="language">Zielsprache:</label>
+            <select id="language" name="language">
+        </div>        <option value="en">Englisch</option>
+                <option value="ja">Japanisch</option>
+            </select>
             <div class="autocomplete" style="width:300px;">
                 <input id="myInput" type="text" name="Fachbegriff" placeholder="Bitte ein Begriff eingeben">
             </div>
-            <input type="submit" value="send">
+            <input type="submit" value="Suchen">
         </form>
         <div id="output"></div>
         <script type="text/javascript" src="./src/autocomp.js"></script>
