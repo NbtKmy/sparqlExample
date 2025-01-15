@@ -1,7 +1,8 @@
 function createSPARQLQuery(input, lang) {
-    return `SELECT distinct ?item ?itemLabel ?itemAltLabel ?itemDescription ?article WHERE{ 
-    ?item ?label "${input}"@de.
-    OPTIONAL {?item skos:altLabel "${input}"@de.}
+    return `SELECT distinct ?item ?itemLabelGoallang ?itemAltLabel ?itemDescription ?article WHERE{ 
+    ?item rdfs:label|skos:altLabel "${input}"@de.
+    OPTIONAL {?item rdfs:label ?itemLabelGoallang.
+        FILTER (lang(?itemLabelGoallang) = "${lang}")}
     OPTIONAL {?item skos:altLabel ?itemAltLabel.
         FILTER (lang(?itemAltLabel) = "${lang}")}
     OPTIONAL {
@@ -10,7 +11,7 @@ function createSPARQLQuery(input, lang) {
         FILTER (SUBSTR(str(?article), 1, 25) = "https://${lang}.wikipedia.org/")}
     ?item wdt:P2579 wd:Q199655.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "${lang}". } 
-    } LIMIT 10`;
+    } LIMIT 20`;
 }
 
 
@@ -37,20 +38,17 @@ document.getElementById("form").addEventListener("submit", function(e) {
                 return;
             }
             
-            results_wrds_arr = [];
+            let results_wrds_arr = [];
             for (const result of results) {
-
-                if (results_wrds_arr.includes(result.itemLabel.value)) {
-                    continue;
-                } else {
-                    results_wrds_arr.push(result.itemLabel.value);
-                }
-
+                results_wrds_arr.push(result.itemLabelGoallang.value);
                 if (result.itemAltLabel) {
                     results_wrds_arr.push(result.itemAltLabel.value);
                 }
             }
-            
+            // erase duplicates in results_wrds_arr
+            results_wrds_arr = Array.from(new Set(results_wrds_arr));
+
+            // add description and wikipedia link
             if (results[0].itemDescription) {
                 result_desc = results[0].itemDescription.value;
             } else {
@@ -62,6 +60,7 @@ document.getElementById("form").addEventListener("submit", function(e) {
                 result_wikilink = "Kein Wikipedia-Artikel vorhanden";
             }
 
+            // create table contents on html
             const table = document.createElement("table");
             results_show.appendChild(table);
             const tbody = document.createElement("tbody");
@@ -98,11 +97,16 @@ document.getElementById("form").addEventListener("submit", function(e) {
             tr3.appendChild(th3);
             
             const td3 = document.createElement("td");
+            if (result_wikilink === "Kein Wikipedia-Artikel vorhanden") {
+                td3.textContent = result_wikilink;
+                
+            } else { 
             const a = document.createElement("a");
             a.href = result_wikilink;
             a.target = "_blank";
             a.textContent = result_wikilink;
             td3.appendChild(a);
+            }
             tr3.appendChild(td3);
             tbody.appendChild(tr3);
             
