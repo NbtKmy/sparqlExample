@@ -3,6 +3,23 @@ function createSPARQLQuery(input, lang) {
     ?item rdfs:label|skos:altLabel "${input}"@de.
     OPTIONAL {?item rdfs:label ?itemLabelGoallang.
         FILTER (lang(?itemLabelGoallang) = "${lang}")}
+    OPTIONAL {?item schema:description ?itemDescription.
+        FILTER (lang(?itemDescription) = "${lang}")}
+    OPTIONAL {?item skos:altLabel ?itemAltLabel.
+        FILTER (lang(?itemAltLabel) = "${lang}")}
+    OPTIONAL {
+        ?article schema:about ?item ;
+            schema:inLanguage "${lang}" .
+        FILTER (SUBSTR(str(?article), 1, 25) = "https://${lang}.wikipedia.org/")}
+    ?item wdt:P2579 wd:Q199655.
+    } LIMIT 20`;
+}
+
+/*
+var old_query = `SELECT distinct ?item ?itemLabelGoallang ?itemAltLabel ?itemDescription ?article WHERE{ 
+    ?item rdfs:label|skos:altLabel "${input}"@de.
+    OPTIONAL {?item rdfs:label ?itemLabelGoallang.
+        FILTER (lang(?itemLabelGoallang) = "${lang}")}
     OPTIONAL {?item skos:altLabel ?itemAltLabel.
         FILTER (lang(?itemAltLabel) = "${lang}")}
     OPTIONAL {
@@ -12,8 +29,7 @@ function createSPARQLQuery(input, lang) {
     ?item wdt:P2579 wd:Q199655.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "${lang}". } 
     } LIMIT 20`;
-}
-
+*/
 
 document.getElementById("form").addEventListener("submit", function(e) {
     e.preventDefault();
