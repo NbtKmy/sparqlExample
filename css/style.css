@@ -6,6 +6,11 @@
     font: 16px Arial;  
   }
   
+  .text {
+    width: 50%;
+    color: #928b8b;
+    font-size: 15px;
+  }
   /*the container must be positioned relative:*/
   .autocomplete {
     position: relative;

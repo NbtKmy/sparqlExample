@@ -7,7 +7,13 @@
     <body>
         <h1>Fachvokabular in Bibliothekswissenschaft</h1>
         <h2>Deutsch-Japanisch/Englisch</h2>
-        <p></p>
+        <p class="text">Diese Plattform verwendet die Wikidata-API und führt SPARQL-Abfragen aus, um spezifische Begriffe im Bereich der Bibliothekswissenschaft zu finden.</p>
+
+        <h3>Funktionsweise</h3>
+        <p class="text">Abfragen sind speziell darauf ausgerichtet, nur Begriffe aus dem Bereich der Bibliothekswissenschaft zu liefern. Dies wird durch die Verwendung der folgenden Zeile in der SPARQL-Abfrage sichergestellt:</p>
+        <pre><code>?item wdt:P2579 wd:Q199655.</code></pre>
+        <p class="text">Diese Zeile beschränkt die Abfrage auf Konzepte, die mit der Bibliothekswissenschaft verbunden sind, basierend auf der Klassifikation in Wikidata.</p>
+
         <form id="form" autocomplete="off" >
             <label for="language">Zielsprache:</label>
             <select id="language" name="language">
