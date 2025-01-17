@@ -1,16 +1,17 @@
-function createSPARQLQuery(input, lang) {
+function createSPARQLQuery(input, goalLang, startLang) {
+    
     return `SELECT distinct ?item ?itemLabelGoallang ?itemAltLabel ?itemDescription ?article WHERE{ 
-    ?item rdfs:label|skos:altLabel "${input}"@de.
+    ?item rdfs:label|skos:altLabel "${input}"@${startLang}.
     OPTIONAL {?item rdfs:label ?itemLabelGoallang.
-        FILTER (lang(?itemLabelGoallang) = "${lang}")}
+        FILTER (lang(?itemLabelGoallang) = "${goalLang}")}
     OPTIONAL {?item schema:description ?itemDescription.
-        FILTER (lang(?itemDescription) = "${lang}")}
+        FILTER (lang(?itemDescription) = "${goalLang}")}
     OPTIONAL {?item skos:altLabel ?itemAltLabel.
-        FILTER (lang(?itemAltLabel) = "${lang}")}
+        FILTER (lang(?itemAltLabel) = "${goalLang}")}
     OPTIONAL {
         ?article schema:about ?item ;
-            schema:inLanguage "${lang}" .
-        FILTER (SUBSTR(str(?article), 1, 25) = "https://${lang}.wikipedia.org/")}
+            schema:inLanguage "${goalLang}" .
+        FILTER (SUBSTR(str(?article), 1, 25) = "https://${goalLang}.wikipedia.org/")}
     ?item wdt:P2579 wd:Q199655.
     } LIMIT 20`;
 }
@@ -37,9 +38,10 @@ document.getElementById("form").addEventListener("submit", function(e) {
     results_show.innerHTML = "";
 
     const input = document.getElementById("myInput").value;
-    const lang = document.getElementById("language").value;
+    const goalLang = document.getElementById("goalLanguage").value;
+    const startLang = document.getElementById("startLanguage").value;
     
-    const query = createSPARQLQuery(input, lang);
+    const query = createSPARQLQuery(input, goalLang, startLang);
     console.log(query);
     fetch("https://query.wikidata.org/bigdata/namespace/wdq/sparql?query=" + encodeURIComponent(query), {
         headers: {
