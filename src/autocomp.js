@@ -1,6 +1,7 @@
 function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
+    
     var currentFocus;
     /*execute a function when someone writes in the text field:*/
     inp.addEventListener("input", function(e) {
@@ -94,64 +95,42 @@ function autocomplete(inp, arr) {
         closeAllLists(e.target);
     });
   }
-  
-  var words = [
-    "Aussonderung",
-    "Deakzession",
-    "Makulierung",
-    "Ausleihe",
-    "Freihandaufstellung",
-    "Untertitel",
-    "Rechercheservice durch eine Bibliothek", 
-    "Fernleihe",
-    "Dezimalklassifikation",
-    "Themenkatalog",
-    "Embargo",
-    "Internationale Standardbuchnummer",
-    "ISBN",
-    "Embargofrist",
-    "Freihandbibliothek",
-    "Titelkatalog",
-    "Lesesaal",
-    "Informationsressourcen",
-    "Ausleihtheke",
-    "Bibliotheksausweis",
-    "Japanische Dezimalklassifikation",
-    "Nippon Decimal Classification",
-    "Katalogbearbeiter",
-    "Katalogisierer",
-    "Magazinbibliothek",
-    "Magazinsystem",
-    "Freihandsystem",
-    "Formalerschließung",
-    "Formalkatalogisierung",
-    "Sacherschließung",
-    "Inhaltserschließung",
-    "Katalogisat",
-    "Magazin",
-    "Revision",
-    "Freihandbestand",
-    "Allgemeines",
-    "Präsenzbibliothek", 
-    "Signatur",
-    "Bestandsaufbau",
-    "Bestandsverwaltung",
-    "Bestandsmanagement",
-    "Bestandsbewertung",
-    "Bestandssuche",
-    "Katalogsuche",
-    "Generalinventur", 
-    "Bibliotheksinventur",
-    "Titelvariante",
-    "Einheitssachtitel",
-    "bibliographische Daten",
-    "Katalogisat",
-    "Titelaufnahme",
-    "Bibliotheksklassifikation",
-    "Bestandssatz",
-    "Lokalsatz",
-    "Retrokatalogisierung"
-  ];
 
-  /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-  autocomplete(document.getElementById("myInput"), words);
+async function loadAutocompWords(language) {
+    try {
+        const response = await fetch(`./lang/${language}.json`);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${language}.json`);
+        }
+        const data = await response.json();
+        const words = data.autocompWords;
+        return words;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const startLanguage = document.getElementById('startLanguage');
+
+  async function updateWords(language) {
+      const words = await loadAutocompWords(language);
+      return words;
+  }
+
+  startLanguage.addEventListener('change', function() {
+      const selectedLanguage = startLanguage.value;
+      updateWords(selectedLanguage).then(words => {
+        autocomplete(document.getElementById("myInput"), words);
+      });
+  });
+
+  // 初期言語の設定
+  const initialLanguage = startLanguage.value;
+  updateWords(initialLanguage).then(words => {
+    autocomplete(document.getElementById("myInput"), words);
+  });
+});
+

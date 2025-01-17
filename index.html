@@ -1,44 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <head>
+    <header>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
         <link rel="stylesheet" href="./css/style.css">
-    </head>     
+    </header>     
     <body>
-        <h1>Fachvokabular in Bibliothekswissenschaft</h1>
-        <h2>Deutsch-Japanisch/Englisch</h2>
-        <p class="text">Diese Plattform verwendet die Wikidata-API und führt SPARQL-Abfragen aus, um spezifische Begriffe im Bereich der Bibliothekswissenschaft zu finden.</p>
+        <header id="main-header">
+            <img src="./img/ei-translation.svg" alt="Logo" id="logo">
+            <select id="languageSelector">
+                <option value="de">Deutsch</option>
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+            </select>
+        </header>
+        <main>
+            <h1 id="title">Fachvokabular in Bibliothekswissenschaft</h2>
+            <p class="text" id="description">Diese Plattform verwendet die Wikidata-API und führt SPARQL-Abfragen aus, um spezifische Begriffe im Bereich der Bibliothekswissenschaft zu finden.</p>
 
-        <h3>Funktionsweise</h3>
-        <p class="text">Abfragen sind speziell darauf ausgerichtet, nur Begriffe aus dem Bereich der Bibliothekswissenschaft zu liefern. Dies wird durch die Verwendung der folgenden Zeile in der SPARQL-Abfrage sichergestellt:</p>
-        <pre><code>?item wdt:P2579 wd:Q199655.</code></pre>
-        <p class="text">Diese Zeile beschränkt die Abfrage auf Konzepte, die mit der Bibliothekswissenschaft verbunden sind, basierend auf der Klassifikation in Wikidata.</p>
+            <h3 id="functionality">Funktionsweise</h3>
+            <p class="text" id="queryExplanation">Abfragen sind speziell darauf ausgerichtet, nur Begriffe aus dem Bereich der Bibliothekswissenschaft zu liefern. Dies wird durch die Verwendung der folgenden Zeile in der SPARQL-Abfrage sichergestellt:</p>
+            <pre><code  id="queryLine">?item wdt:P2579 wd:Q199655.</code></pre>
+            <p class="text" id="queryDescription">Diese Zeile beschränkt die Abfrage auf Konzepte, die mit der Bibliothekswissenschaft verbunden sind, basierend auf der Klassifikation in Wikidata.</p>
 
-        <form id="form" autocomplete="off" >
-            <div id="selector" class="selector">
-                <label for="startLanguage">Ausgangssprache</label>
-                <select id="startLanguage" name="startLanguage">
-                    <option value="en">Englisch</option>
-                    <option value="de">Deutsch</option>
-                    <option value="ja">Japanisch</option>
-                </select>
+            <form id="form" autocomplete="off" >
+                <div id="selector" class="selector">
+                    <label for="startLanguage"  id="startLanguageLabel">Ausgangssprache</label>
+                    <select id="startLanguage" name="startLanguage">
+                        <option value="en" id="startLang_en">Englisch</option>
+                        <option value="de" id="startLang_de">Deutsch</option>
+                        <option value="ja" id="startLang_ja">Japanisch</option>
+                    </select>
+                    <br>
+                    <label for="goalLanguage" id="goalLanguageLabel">Zielsprache:</label>
+                    <select id="goalLanguage" name="goalLanguage">
+                        <option value="en" id="goalLang_en">Englisch</option>
+                        <option value="de" id="goalLang_de">Deutsch</option>
+                        <option value="ja" id="goalLang_ja">Japanisch</option>
+                    </select>
+                </div>
                 <br>
-                <label for="goalLanguage">Zielsprache:</label>
-                <select id="goalLanguage" name="goalLanguage">
-                    <option value="en">Englisch</option>
-                    <option value="de">Deutsch</option>
-                    <option value="ja">Japanisch</option>
-                </select>
-            </div>
-            <br>
-            <div class="autocomplete" style="width:300px;">
-                <input id="myInput" type="text" name="Fachbegriff" placeholder="Bitte ein Begriff eingeben">
-            </div>
-            <input type="submit" value="Suchen">
-        </form>
-        <div id="output"></div>
+                <div class="autocomplete">
+                    <input id="myInput" type="text" name="Fachbegriff" placeholder="Bitte ein Begriff eingeben">
+                </div>
+                <input type="submit" value="Suchen" id="searchButton">
+            </form>
+            <div id="output"></div>
+        </main>
+        <script type="text/javascript" src="./src/multilang.js"></script>
         <script type="text/javascript" src="./src/autocomp.js"></script>
         <script type="text/javascript" src="./src/main.js"></script>
-
     </body>
 </html>
