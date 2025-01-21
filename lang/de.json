@@ -15,6 +15,14 @@
     "goalLang_en": "Englisch",
     "goalLang_de": "Deutsch",
     "goalLang_ja": "Japanisch",
+    "output": {
+        "firstRow": "Übersetzung",
+        "secondRow": "Beschreibung",
+        "secondRowContent": "Keine Beschreibung gefunden",
+        "thirdRow": "Wikipedia-Artikel",
+        "thirdRowContent": "Kein Wikipedia-Artikel vorhanden",
+        "ErrorMessage": "Keine Übersetzung gefunden"
+    },
     "autocompWords": [
         "Aussonderung",
         "Deakzession",

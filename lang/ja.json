@@ -15,6 +15,14 @@
     "goalLang_en": "英語",
     "goalLang_de": "ドイツ語",
     "goalLang_ja": "日本語",
+    "output": {
+        "firstRow": "翻訳",
+        "secondRow": "説明",
+        "thirdRow": "Wikipedia記事",
+        "secondRowContent": "説明が見つかりません",
+        "thirdRowContent": "Wikipedia記事が見つかりません",
+        "ErrorMessage": "翻訳が見つかりません"
+    },
     "autocompWords": [
         "除却",
         "脱却",
