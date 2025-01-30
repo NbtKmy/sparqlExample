@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+        <link rel="stylesheet" href="./css/style_js.css">
+    </head>     
+    <body>
+        <h1>ジャパンサーチの中の人物とその作品検索</h1>
+        <p>ジャパンサーチに登録された人名とその作品をサーチします。見つかった作品のうち20をリストアップします。</p>
+        <form id="form_js" autocomplete="off" >
+            <div class="autocomplete_js">
+                <input id="input_js" type="text" name="kensaku" placeholder="人名を入力してください">
+            </div>
+            <input type="submit" value="検索" id="searchButton_js">
+        </form>
+        <div class="spinner" id="spinner"></div>
+        <div id="output_js">
+        </div>
+        <script src="./src/main_js.js"></script>
+    </body>
+</html>
