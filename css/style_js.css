@@ -48,3 +48,22 @@ img {
     transform:rotate(360deg)
   }
 }
+
+.works_list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.works_list li {
+  background-color: #f9f9f9;
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.works_list li:hover {
+  background-color: #7c7878;
+}

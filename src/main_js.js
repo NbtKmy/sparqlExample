@@ -11,10 +11,17 @@ function createSPARQLQueryJS(input) {
 LIMIT 20`;
 }
 
-function showOutputsJS(results) {
-    const results_container = document.getElementById("output_js");
-    let img_link = results[0].image.value;
+
+
+function showOutputsJS(input, results) {
     
+    // 作者の名前を取得
+    const h2 = document.createElement("h2");
+    h2.textContent = input;
+    h2.setAttribute("class", "creator_name");
+
+    // 作者の画像を取得
+    let img_link = results[0].image.value;
     const img = document.createElement("img");
     if (img_link) {
         img.src = img_link;
@@ -22,7 +29,26 @@ function showOutputsJS(results) {
         img.src = "./img/ei-crying_face.svg";
     }
     
+    // 作品情報を取得
+    const h3 = document.createElement("h3");
+    h3.textContent = "作品リスト";
+    h3.setAttribute("class", "works_list_title");
+
+    let workslist = "";
+    results.map(result => {
+        workslist += `<li><a href='${result.url.value}' target='_blank' rel='noopener noreferrer'>${result.itemLabel.value}</a></li>`;
+    });
+    const ul = document.createElement("ul");
+    ul.innerHTML = workslist;
+    ul.setAttribute("class", "works_list");
+
+    // 以下結果を表示
+    const results_container = document.getElementById("output_js");
+    results_container.appendChild(h2);
     results_container.appendChild(img);
+    results_container.appendChild(h3);
+    results_container.appendChild(ul);
+
 }
 
 document.getElementById("form_js").addEventListener("submit", function(e) {
@@ -33,7 +59,6 @@ document.getElementById("form_js").addEventListener("submit", function(e) {
     const input = document.getElementById("input_js").value;
 
     const query = createSPARQLQueryJS(input);
-    console.log(query);
     
     const spinner = document.getElementById("spinner");
     spinner.style.display = "block";
@@ -50,7 +75,7 @@ document.getElementById("form_js").addEventListener("submit", function(e) {
                 alert("見つかりませんでした。別の名前でお試しください。");
                 return;
             } else {
-                showOutputsJS(results);
+                showOutputsJS(input, results);
             }
         })
         .catch(error => {
