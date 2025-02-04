@@ -69,7 +69,7 @@ document.getElementById("form_js").addEventListener("submit", function(e) {
         }})
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             let results = data.results.bindings;
             if (results.length === 0) {
                 alert("見つかりませんでした。別の名前でお試しください。");
