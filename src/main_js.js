@@ -75,7 +75,12 @@ document.getElementById("form_js").addEventListener("submit", function(e) {
                 alert("見つかりませんでした。別の名前でお試しください。");
                 return;
             } else {
-                showOutputsJS(input, results);
+                if (results[0].itemLabel) {
+                    // console.log(results[0].itemLabel.value);
+                    showOutputsJS(input, results);
+                } else {
+                    alert("見つかりませんでした。別の名前でお試しください。");
+                }
             }
         })
         .catch(error => {
