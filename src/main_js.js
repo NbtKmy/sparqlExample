@@ -20,10 +20,10 @@ function showOutputsJS(input, results) {
     h2.textContent = input;
     h2.setAttribute("class", "creator_name");
 
-    // 作者の画像を取得
-    let img_link = results[0].image.value;
     const img = document.createElement("img");
-    if (img_link) {
+    // 作者の画像を取得
+    if (results[0].image) {
+        const img_link = results[0].image.value;
         img.src = img_link;
     } else {
         img.src = "./img/ei-crying_face.svg";
@@ -69,8 +69,8 @@ document.getElementById("form_js").addEventListener("submit", function(e) {
         }})
         .then(response => response.json())
         .then(data => {
-            // console.log(data);
             let results = data.results.bindings;
+            // console.log(results);
             if (results.length === 0) {
                 alert("見つかりませんでした。別の名前でお試しください。");
                 return;
